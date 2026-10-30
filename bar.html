@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:transparent;color:white;font:600 13px 'DM Sans',system-ui,sans-serif;user-select:none}
+.wrap{height:58px;margin:2px;background:#14131beF;border:1px solid #8b5cf680;border-radius:16px;box-shadow:0 14px 35px #0009;display:flex;align-items:center;gap:13px;padding:0 14px;-webkit-app-region:drag}
+.brand{font-size:12px;letter-spacing:.03em;color:#c7b3ed}.dot{width:11px;height:11px;border-radius:50%;background:#ff495e;box-shadow:0 0 0 4px #ff495e18;transition:background .12s,box-shadow .12s}
+.dot.flash{background:#b165ff;box-shadow:0 0 0 7px #8b5cf650}.timer{font:700 16px ui-monospace,monospace;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.sep{height:22px;width:1px;background:#38333f}.grow{flex:1}.btn{border:1px solid #ffffff24;color:white;background:#31293f;border-radius:9px;cursor:pointer;padding:8px 13px;-webkit-app-region:no-drag;font-weight:700}
+.btn:hover{background:#49335f}.close{padding:6px 10px;background:transparent;font-size:16px}.muted{color:#d2c8db}
+</style></head><body><div class="wrap"><span class="brand">SC</span><span class="sep"></span><span id="dot" class="dot"></span><span id="timer" class="timer">00:00</span><span id="status" class="muted"></span><span class="grow"></span><button id="stop" class="btn">■ Stop</button><button id="discard" title="Discard recording" class="btn close">✕</button></div><script>
+const {ipcRenderer}=require('electron');let countdownTimer=null, clockTimer=null, active=false, started=0, flashed=null, countdownStarted=false;
+function clearAll(){clearInterval(countdownTimer);clearInterval(clockTimer)}
+function beginCountdown(n){if(active||countdownStarted)return;countdownStarted=true;clearAll();document.getElementById('stop').disabled=true;
+ if(!n){ipcRenderer.send('countdown-done');return}let remaining=n;document.getElementById('timer').textContent=String(remaining);document.getElementById('status').textContent='Starting…';
+ countdownTimer=setInterval(()=>{remaining--;if(remaining<=0){clearInterval(countdownTimer);ipcRenderer.send('countdown-done')}else document.getElementById('timer').textContent=String(remaining)},1000)}
+ipcRenderer.on('bar-countdown',(_e,n)=>beginCountdown(n));
+ipcRenderer.on('bar-active',()=>{active=true;clearAll();started=performance.now();document.getElementById('stop').disabled=false;document.getElementById('timer').textContent='00:00';document.getElementById('status').textContent='REC';clockTimer=setInterval(()=>{const s=Math.floor((performance.now()-started)/1000);document.getElementById('timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},150)});
+ipcRenderer.on('click-flash',()=>{const dot=document.getElementById('dot');dot.classList.add('flash');clearTimeout(flashed);flashed=setTimeout(()=>dot.classList.remove('flash'),200)});
+document.getElementById('stop').onclick=()=>{if(active){document.getElementById('stop').disabled=true;document.getElementById('status').textContent='Saving…';ipcRenderer.send('bar-stop')}};
+document.getElementById('discard').onclick=()=>{if(confirm('Discard this recording?'))ipcRenderer.send('bar-discard')};
+ipcRenderer.send('bar-ready');
+</script></body></html>
