@@ -1,0 +1,19 @@
+# Dependencies installed by npm
+node_modules/
+
+# Portable Windows builds
+/dist/
+
+# Generated media from npm test and exports
+/demo/
+
+# Debug, temp, and operating-system files
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Local editor and IDE files
+.vscode/
+.idea/
