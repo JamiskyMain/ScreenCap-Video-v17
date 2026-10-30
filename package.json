@@ -1,0 +1,31 @@
+{
+  "name": "screencap-video",
+  "productName": "ScreenCap Video",
+  "version": "1.0.0",
+  "description": "A click-aware desktop recorder and social video editor",
+  "main": "main.js",
+  "author": "ScreenCap Video",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable",
+    "test": "node --check main.js && node --check test/smoke.js && node test/smoke.js"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "uiohook-napi": "^1.5.5"
+  },
+  "devDependencies": {
+    "electron": "28.3.3",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.screencap.video",
+    "productName": "ScreenCap Video",
+    "asar": true,
+    "asarUnpack": ["node_modules/ffmpeg-static/**", "node_modules/uiohook-napi/**"],
+    "files": ["main.js", "index.html", "bar.html", "package.json", "node_modules/**"],
+    "win": { "target": ["portable"], "artifactName": "ScreenCap-Video-${version}-Portable.${ext}" },
+    "portable": { "artifactName": "ScreenCap-Video-${version}-Portable.exe" }
+  }
+}
