@@ -1,0 +1,516 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ScreenCap Video</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0e;--surface:#121218;--surface2:#191821;--elevated:#211d2a;--border:#ffffff16;--text:#f6f3fb;--sub:#a39caf;--purple:#a855f7;--indigo:#6366f1;--red:#ff526a}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Sans',Inter,'Segoe UI',sans-serif;font-size:13px}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+#app{height:100%;display:flex;flex-direction:column}.titlebar{height:47px;flex:none;display:flex;align-items:center;padding:0 18px;border-bottom:1px solid var(--border);-webkit-app-region:drag;background:#101015;gap:14px}.app-symbol{width:26px;height:26px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(130deg,var(--purple),var(--indigo));font-weight:900;box-shadow:0 3px 12px #8652fc60}.appname{font-size:13px;font-weight:800}.titlebar .subtitle{font-size:11px;color:#777180}.titlebar .grow{flex:1}.window-btn{width:32px;height:27px;background:transparent;border:0;color:var(--sub);border-radius:6px;font-size:17px;-webkit-app-region:no-drag}.window-btn:hover{background:#ffffff16;color:white}.window-btn.close:hover{background:#e03e50}
+#home{min-height:0;flex:1;display:flex;overflow:auto;align-items:center;justify-content:center;padding:40px 28px;background:radial-gradient(ellipse at 50% -20%,#57266d40,transparent 55%),var(--bg)}.home-inner{width:min(880px,100%)}.eyebrow{text-transform:uppercase;color:#b58af5;letter-spacing:.16em;font-size:11px;font-weight:800}.home-inner h1{font-size:40px;margin:13px 0 10px;letter-spacing:-1.7px;line-height:1.1}.home-inner .lead{color:var(--sub);font-size:14px;margin-bottom:31px;line-height:1.7}.selection-label{font-size:13px;font-weight:800;margin:23px 0 12px}.displays{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}.display-card{background:#17151e;border:1px solid #ffffff19;border-radius:14px;padding:9px;text-align:left;color:#eee;min-width:0;transition:.2s}.display-card:hover{border-color:#a855f788;transform:translateY(-2px)}.display-card.active{border-color:#ac6cff;box-shadow:inset 0 0 0 1px #a855f755,0 0 23px #a855f720}.thumb{aspect-ratio:16/9;width:100%;object-fit:cover;background:linear-gradient(45deg,#282735,#161522);border-radius:8px}.screen-caption{display:flex;justify-content:space-between;align-items:center;margin:10px 4px 2px}.screen-caption b{font-size:12px}.tiny{color:var(--sub);font-size:11px}.home-config{display:grid;grid-template-columns:1fr 160px;gap:18px;margin:23px 0}.setting-card{border:1px solid var(--border);border-radius:14px;background:#15141b;padding:17px}.setting-card .selection-label{margin:0 0 12px}.choice-row{display:flex;gap:8px}.pill{background:#24212e;border:1px solid #ffffff15;border-radius:9px;padding:9px 14px;color:#c8c0cf;font-weight:700}.pill.active{background:#6924a540;color:#e8ccff;border-color:#a855f780}.toggle-row{display:flex;gap:18px;flex-wrap:wrap}.toggle{display:flex;align-items:center;gap:9px;color:#ddd5e5;cursor:pointer}.toggle input{accent-color:var(--purple);width:16px;height:16px}.home-actions{display:flex;align-items:center;gap:15px;margin-top:24px;flex-wrap:wrap}.primary{border:0;background:linear-gradient(110deg,var(--purple),var(--indigo));color:white;border-radius:11px;padding:12px 21px;font-weight:800;box-shadow:0 9px 24px #7e40f536}.primary:hover{filter:brightness(1.11)}.start{padding:16px 35px;font-size:15px}.secondary{border:1px solid #ffffff26;background:#1b1923;color:#efeaf9;border-radius:11px;padding:12px 17px;font-weight:700}.secondary:hover{background:#282332}.helptext{font-size:11px;color:#837b8f}.notice{border:1px solid #ffbe6977;background:#42312046;padding:12px 15px;border-radius:11px;color:#ffd19a;line-height:1.5;margin-top:16px}.hidden{display:none!important}
+#editor{display:flex;flex:1;min-height:0;flex-direction:column}.editor-top{height:50px;flex:none;padding:0 18px;display:flex;align-items:center;border-bottom:1px solid var(--border);gap:12px}.back{color:#c8bdcf;background:transparent;border:0}.file-name{font-weight:700;max-width:35vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.editor-top .fill{flex:1}.top-pill{font-size:11px;border-radius:18px;background:#241f2b;padding:6px 10px;color:#bab0c8}.editor-content{display:flex;flex:1;min-height:0}.preview-pane{flex:1;min-width:0;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 50%,#1b1921 0%,#101015 72%)}.preview-header{height:47px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:var(--sub);border-bottom:1px solid #ffffff0d}.preview-stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden}.preview-stage canvas{display:block;max-width:100%;max-height:100%;box-shadow:0 10px 70px #0007;touch-action:none;cursor:default;background:#0c0b10}.preview-footer{height:34px;color:#857f91;display:flex;align-items:center;justify-content:center;font-size:11px;gap:16px}
+.panel{width:290px;flex:none;background:#15141a;border-left:1px solid var(--border);overflow-y:auto;padding:16px 16px 30px;scrollbar-width:thin;scrollbar-color:#493d55 transparent}.panel h3{font-size:14px;margin:1px 0 15px}.panel-section{border-bottom:1px solid #ffffff15;padding-bottom:17px;margin-bottom:17px}.field{margin:0 0 15px}.field-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 8px;font-size:12px;font-weight:700}.value{color:#b595e1;font-size:11px;font-variant-numeric:tabular-nums}.panel select,.panel input[type=number]{width:100%;background:#24212d;color:#efebf4;border:1px solid #ffffff1a;border-radius:8px;padding:9px;outline:0}.panel select:focus,.panel input:focus{border-color:#a855f7}.panel input[type=range]{width:100%;accent-color:#a855f7;cursor:pointer}.cols2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.output-box{border-radius:9px;background:#211a2b;border:1px solid #a855f72a;padding:10px;text-align:center;font-size:12px;color:#d2b5f0;font-weight:700}.small-btn{width:100%;padding:9px 10px;border-radius:8px;border:1px solid #ffffff27;background:#27212e;color:#e8e2ee;font-size:12px;font-weight:700}.small-btn:hover{background:#352940}.small-btn.danger{color:#ff8e9f}.seg{display:flex;gap:4px;background:#24212b;border-radius:10px;padding:4px}.seg button{flex:1;min-width:0;border:0;background:transparent;padding:7px 3px;color:#a9a1b2;border-radius:7px;font-size:11px;font-weight:700}.seg button.active{background:#43324f;color:white}.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}.swatch{aspect-ratio:1;border-radius:9px;border:2px solid transparent;position:relative;overflow:hidden;padding:0}.swatch.active{border-color:#fff;outline:2px solid #9850ff}.swatch.wallpaper{background-size:cover}.img-add{aspect-ratio:1;border-radius:9px;background:#2a2431;border:1px dashed #826698;color:#d3b9e8;font-size:23px}.swatch .remove{position:absolute;right:1px;top:1px;display:none;background:#000c;color:white;border:0;border-radius:4px;padding:0 3px;z-index:2}.swatch:hover .remove{display:block}.split-label{display:flex;align-items:center;gap:9px;cursor:pointer;margin:9px 0;color:#d6cedf;font-size:12px}.split-label input{accent-color:var(--purple)}.selected{background:#241c2e;border:1px solid #7b4e9b77;border-radius:11px;padding:12px;margin-top:13px}.selected strong{display:block;margin-bottom:12px}.info-note{font-size:11px;color:#9b91a5;line-height:1.5}
+.timeline{height:210px;flex:none;background:#111016;border-top:1px solid #ffffff22;padding:11px 17px 12px;display:flex;flex-direction:column;gap:9px}.timeline-controls{display:flex;align-items:center;gap:12px;min-height:28px}.play{height:30px;width:34px;border:1px solid #ffffff2b;background:#262230;color:white;border-radius:8px}.timecode{font-family:ui-monospace,'Cascadia Code',monospace;color:#e5dfee;font-size:12px;min-width:140px}.timeline-label{font-size:10px;font-weight:800;color:#8a8197;letter-spacing:.06em;text-transform:uppercase;width:56px;flex:none}.timeline-scroll{display:flex;flex-direction:column;flex:1;min-height:0}.timeline-line{display:flex;gap:10px;align-items:stretch}.time-lane{position:relative;flex:1;min-width:0;border-radius:7px;overflow:hidden;touch-action:none}.ruler{height:22px;cursor:crosshair}.tick{position:absolute;height:6px;width:1px;background:#554b61;bottom:0}.tick span{position:absolute;bottom:8px;left:2px;font-size:10px;color:#887e93;font-variant-numeric:tabular-nums}.clip-lane{height:43px;background:#1c1922;border:1px solid #33283f;cursor:crosshair}.clip-block{position:absolute;top:3px;bottom:3px;background:linear-gradient(90deg,#41304c,#372d49,#493555);border:1px solid #7c4fa3;border-radius:5px}.trim{position:absolute;top:0;bottom:0;width:8px;background:#ac68ff;cursor:ew-resize;z-index:4}.trim.left{left:0}.trim.right{right:0}.click-dot{position:absolute;top:12px;width:5px;height:16px;background:#fff;border-radius:4px;pointer-events:none;opacity:.8}.click-dot.manual{background:#ffc863}.zoom-lane{height:33px;background:#17141e;border:1px solid #30283a;cursor:crosshair}.zoom-block{position:absolute;top:3px;bottom:3px;border-radius:5px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#a855f7dd,#6366f1bb);border:1px solid #b486ff;color:white;font-size:11px;font-weight:800;cursor:grab;touch-action:none;user-select:none}.zoom-block.active{outline:2px solid #e2bcff;outline-offset:-2px}.zoom-block .edge{position:absolute;top:0;bottom:0;width:9px;cursor:ew-resize}.zoom-block .edge.left{left:0}.zoom-block .edge.right{right:0}.playhead{position:absolute;top:0;bottom:0;border-left:2px solid #f7e9ff;pointer-events:none;z-index:6}.playhead:before{content:'';position:absolute;top:-1px;left:-5px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid #f7e9ff}.progress{height:5px;border-radius:7px;background:#28202f;overflow:hidden;width:190px}.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--indigo))}.banner{position:fixed;left:50%;bottom:240px;transform:translateX(-50%);z-index:30;background:#292136;border:1px solid #73598a;color:#f5eafa;border-radius:11px;padding:12px 18px;box-shadow:0 12px 36px #0009;max-width:80vw;white-space:normal}.banner button{color:#e9c7ff;background:transparent;border:0;font-weight:800;margin-left:12px}
+@media(max-width:1100px){.panel{width:270px}.preview-stage{padding:12px}.home-inner h1{font-size:32px}}::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#473b51;border-radius:6px}
+</style></head><body><div id="app">
+<header class="titlebar"><div class="app-symbol">◉</div><div class="appname">ScreenCap Video</div><div class="subtitle">CREATOR STUDIO</div><div class="grow"></div><button class="window-btn" id="minimize" title="Minimize">−</button><button class="window-btn" id="maximize" title="Maximize">□</button><button class="window-btn close" id="close" title="Close">×</button></header>
+<section id="home"><div class="home-inner"><div class="eyebrow">Your screen, beautifully told.</div><h1>Make every click<br><span style="background:linear-gradient(110deg,#c778fa,#6d73ff);color:transparent;background-clip:text">worth watching.</span></h1><p class="lead">Record the screen. Auto-focus on clicks. Export polished videos for X, tutorials and product demos.</p><div class="selection-label">01 &nbsp; Choose a screen</div><div id="displays" class="displays"></div>
+<div class="home-config"><div class="setting-card"><div class="selection-label">02 &nbsp; Capture area</div><div class="choice-row"><button class="pill active" id="area-full">▣ &nbsp;Full screen</button><button class="pill" id="area-select">▧ &nbsp;Select area</button></div><div id="area-caption" class="helptext" style="margin-top:10px">Your full screen will be captured.</div></div><div class="setting-card"><div class="selection-label">03 &nbsp; Frame rate</div><div class="choice-row"><button class="pill" data-fps="30">30</button><button class="pill active" data-fps="60">60</button></div></div></div>
+<div class="setting-card"><div class="selection-label">04 &nbsp; Recording options</div><div class="toggle-row"><label class="toggle"><input type="checkbox" id="system-audio" checked>System audio</label><label class="toggle"><input type="checkbox" id="microphone">Microphone</label><label class="toggle"><input type="checkbox" id="countdown" checked>3s countdown</label></div></div>
+<div id="hook-warning" class="notice hidden"></div><div id="home-warning" class="notice hidden"></div><div class="home-actions"><button id="start-record" class="primary start">● &nbsp; Start recording</button><button id="open-video" class="secondary">↗ &nbsp; Open existing video</button><span class="helptext">F9 to start / stop · F8 manual zoom</span></div></div></section>
+<section id="editor" class="hidden"><div class="editor-top"><button class="back" id="back-home">← &nbsp; Home</button><span class="file-name" id="file-name">recording</span><span class="top-pill">60 FPS EXPORT</span><div class="fill"></div><button class="secondary" id="crop-open">▧ Crop</button><button class="primary" id="export-btn">↗ &nbsp; Export MP4</button></div>
+<div class="editor-content"><div class="preview-pane"><div class="preview-header"><span id="canvas-title">LIVE PREVIEW</span><span id="preview-dim">1920 × 1080</span></div><div class="preview-stage" id="preview-stage"><canvas id="preview" width="1280" height="720"></canvas></div><div class="preview-footer"><span>Zoom is rendered inside the frame</span><span id="crop-hint" class="hidden">Drag to draw · Corners resize · Enter applies · Esc cancels</span></div></div>
+<aside class="panel"><div id="normal-panel"><h3>Customize video</h3><div class="panel-section"><div class="field"><div class="field-title">Format</div><select id="format"><option value="auto">Auto (recording ratio)</option><option value="16:9">16:9 · Landscape</option><option value="4:3">4:3 · Classic</option><option value="1:1">1:1 · Square</option><option value="4:5">4:5 · Portrait</option><option value="9:16">9:16 · Vertical</option><option value="custom">Custom size</option></select></div><div class="cols2 hidden" id="custom-dim"><div class="field"><div class="field-title">Width</div><input id="custom-width" type="number" min="320" max="3840" step="2" value="1920"></div><div class="field"><div class="field-title">Height</div><input id="custom-height" type="number" min="320" max="3840" step="2" value="1080"></div></div><div id="output-size" class="output-box">Output: 1920 × 1080 px</div></div>
+<div class="panel-section"><div class="field"><div class="field-title">Padding <span class="value" id="padding-v"></span></div><input id="padding" type="range" min="0" max="30" step="1"></div><div class="field"><div class="field-title">Corner radius <span class="value" id="radius-v"></span></div><input id="radius" type="range" min="0" max="60" step="1"></div><div class="field"><div class="field-title">Shadow <span class="value" id="shadow-v"></span></div><input id="shadow" type="range" min="0" max="100" step="1"></div></div>
+<div class="panel-section"><div class="field-title">Backgrounds</div><div class="seg" id="bg-tabs"><button data-tab="gradient" class="active">Gradients</button><button data-tab="wallpaper">Wallpapers</button><button data-tab="image">Images</button></div><div id="background-swatches" class="swatches"></div><div id="image-blur-wrap" class="field hidden" style="margin-top:16px"><div class="field-title">Image blur <span class="value" id="image-blur-v"></span></div><input type="range" id="image-blur" min="0" max="35" value="0"></div></div>
+<div class="panel-section"><h3>Auto zoom</h3><div class="field"><div class="field-title">Default zoom <span id="zoom-level-v" class="value"></span></div><input id="zoom-level" type="range" min="1.2" max="3.5" step="0.1"></div><div class="field"><div class="field-title">Speed</div><select id="speed"><option value="calm">Calm</option><option value="normal">Normal</option><option value="fast">Fast</option></select></div><label class="split-label"><input type="checkbox" id="follow"> Camera follows mouse</label><label class="split-label"><input type="checkbox" id="click-effect"> Click effect</label><div class="cols2" style="margin-top:12px"><button class="small-btn" id="rebuild">↻ Rebuild auto zooms</button><button class="small-btn danger" id="clear-zooms">Clear all</button></div><div id="selected-zoom" class="selected hidden"><strong id="selected-label">Selected zoom</strong><div class="field"><div class="field-title">Zoom level <span class="value" id="selected-level-v"></span></div><input type="range" id="selected-level" min="1.2" max="3.5" step="0.1"></div><div class="field"><div class="field-title">Focus</div><select id="selected-mode"><option value="follow">Follow mouse</option><option value="fixed">Fixed point</option></select></div><button class="small-btn" id="pick-point">⌖ Pick point in preview</button><button class="small-btn danger" id="delete-zoom" style="margin-top:9px">Delete selected zoom</button></div></div></div>
+<div id="crop-panel" class="hidden"><h3>Crop recording</h3><div class="info-note" style="margin-bottom:15px">Select the area to keep. The original full-screen video stays untouched.</div><div class="field"><div class="field-title">Aspect lock</div><select id="crop-aspect"><option value="free">Free</option><option value="16:9">16:9</option><option value="4:3">4:3</option><option value="1:1">1:1</option><option value="9:16">9:16</option></select></div><div id="crop-size" class="output-box" style="margin:12px 0">—</div><button class="small-btn" id="crop-full">□ Full screen</button><div class="cols2" style="margin-top:12px"><button class="secondary" id="crop-cancel">Cancel</button><button class="primary" id="crop-apply">Apply</button></div></div></aside></div>
+<div class="timeline"><div class="timeline-controls"><button class="play" id="play">▶</button><span class="timecode" id="timecode">00:00.00 / 00:00.00</span><button class="small-btn" id="add-zoom" style="width:auto">+ Add zoom</button><span class="helptext" id="zoom-count">0 zooms</span><div style="flex:1"></div><div id="export-ui" class="hidden" style="display:flex;gap:10px;align-items:center"><span id="export-label" class="tiny">Rendering 0%</span><div class="progress"><div id="export-fill"></div></div><button class="small-btn" id="cancel-export" style="width:auto">Cancel</button></div><span class="helptext">Space play · Z zoom · ←/→ frame</span></div>
+<div class="timeline-scroll"><div class="timeline-line"><div class="timeline-label"></div><div class="time-lane ruler" id="ruler"></div></div><div class="timeline-line"><div class="timeline-label" style="line-height:43px">CLIP</div><div class="time-lane clip-lane" id="clip-lane"></div></div><div class="timeline-line"><div class="timeline-label" style="line-height:33px">ZOOMS</div><div class="time-lane zoom-lane" id="zoom-lane"></div></div></div></div></section>
+<div id="toast" class="banner hidden"></div><video id="source-video" playsinline preload="auto" style="display:none"></video></div>
+<script>
+'use strict';
+const {ipcRenderer}=require('electron');
+const path=require('path');
+const {pathToFileURL}=require('url');
+const $=id=>document.getElementById(id);
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+const full=()=>({x:0,y:0,w:1,h:1});
+const fmt=t=>{t=Math.max(0,t||0);return `${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}.${String(Math.floor(t%1*100)).padStart(2,'0')}`};
+const aspect=s=>{if(s==='free')return null;const [w,h]=s.split(':').map(Number);return w/h};
+const EVEN=n=>clamp(Math.round(n/2)*2,320,3840);
+const codecList=['video/webm;codecs=h264,opus','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+function codec(){return codecList.find(c=>MediaRecorder.isTypeSupported(c))||''}
+const defaults={format:'auto',customWidth:1920,customHeight:1080,padding:9,radius:22,shadow:70,bgTab:'gradient',bgIndex:0,imagePath:'',imageBlur:0,zoomLevel:2,speed:'normal',follow:true,clickEffect:true,images:[]};
+let settings={...defaults};
+try{const saved=JSON.parse(localStorage.getItem('screencap-video-settings')||'{}');if(saved&&typeof saved==='object')settings={...settings,...saved};}catch(_){}
+function saveSettings(){try{localStorage.setItem('screencap-video-settings',JSON.stringify(settings))}catch(_){}}
+let displays=[], chosen=null, area=full(), fps=60;
+let captureStream=null, micStream=null, systemStream=null, audioCtxRecord=null, recorder=null, recordChunks=Promise.resolve(), captureJob=null;
+let video=$('source-video'), canvas=$('preview'),ctx=canvas.getContext('2d',{alpha:false});
+let videoFile='',log={cursor:[],clicks:[],keys:[],manual:[]},duration=0,trimStart=0,trimEnd=0,playhead=0,zooms=[],selectedZoom=-1,pickMode=false;
+let crop=full(),pendingCrop=full(),cropMode=false,cropDrag=null;
+let cache=document.createElement('canvas'),cacheCtx=cache.getContext('2d'), cacheDirty=true,cacheKey='';
+let outputW=1920,outputH=1080,frameRect={x:0,y:0,w:0,h:0};
+let camera=[],cameraDirty=true,cameraFps=60;
+let bgImages=new Map(), previewEnabled=false, renderingExport=false, exporting=false, exportCancelled=false, exportId=null, exportRecorder=null;
+let sourceAudio=null,audioCtxExport=null,audioDestination=null,exportTimer=null;
+let dragState=null,lastTime=performance.now(),warningTimer=null;
+const palettes=[
+['#2b1448','#784cda'],['#0d263d','#156999'],['#101c38','#5966d8'],['#310d45','#a14da9'],['#261638','#e878a0'],['#241123','#e77450'],
+['#071e2c','#02a4b6'],['#172d21','#68a373'],['#462140','#ff7894'],['#182036','#7b91d1'],['#2d1452','#5129a9'],['#402548','#dc8292'],
+['#19172a','#655a92'],['#0c2b2a','#368c85'],['#322427','#bd7762'],['#2a163c','#6b70ef'],['#10151c','#426780'],['#0b242b','#66c0a8']
+];
+const gradients=Array.from({length:48},(_,i)=>{const a=palettes[i%palettes.length];const flip=Math.floor(i/palettes.length), mid=flip>0?palettes[(i*3+9)%palettes.length][1]:null;return {colors:flip===2?[a[0],mid,a[1]]:flip===1?[a[0],a[1],mid]:[a[0],a[1]],angle:125+flip*20+i%5*8}});
+const wallpapers=[
+['Sunset','#121c46',['#2164a8','#f47a50','#5a338b']],['Violet Haze','#17112d',['#8a34d2','#652ab9','#e36ba0']],['Aurora','#0b2526',['#23b98e','#4d46b4','#1ea4b5']],
+['Midnight','#061228',['#2d568f','#1f3d66','#634b9c']],['Rose Cloud','#32192c',['#ed7299','#b14773','#f99d65']],['Lime Glow','#182623',['#74a945','#1c987e','#adb862']],
+['Blue Hour','#091c35',['#3378c3','#6145ae','#6faedc']],['Sandstone','#35241c',['#b98358','#e2b17c','#84516b']],['Carbon','#17171a',['#656171','#383c59','#50515c']],
+['Plum','#24132b',['#733999','#aa507f','#412e8c']],['Ocean','#061e2d',['#12789e','#1f4e81','#58a7a9']],['Ember','#2c1713',['#b54c27','#e88755','#733062']],
+['Glacier','#132c35',['#96c9ca','#6298b3','#7088b9']],['Lavender','#30213d',['#ba88dc','#8877b8','#e6a2c1']],['Neon City','#12132c',['#ca35aa','#235fb6','#d44b87']],
+['Evergreen','#10231b',['#648e5e','#2a8261','#8fb57d']],['Copper','#322116',['#b98948','#b25936','#e1a971']],['Dusk','#1c1b35',['#5562d6','#bf6689','#f4a36f']]
+].map(([name,base,blobs])=>({name,base,blobs}));
+function wallpaperPaint(c,w,h,i){const p=wallpapers[i];c.fillStyle=p.base;c.fillRect(0,0,w,h);const points=[[.15,.12,.75],[.92,.81,.85],[.55,.43,.75],[.35,.96,.6]];
+ p.blobs.forEach((color,j)=>{const [x,y,size]=points[j%4],r=Math.max(w,h)*size;const g=c.createRadialGradient(x*w,y*h,0,x*w,y*h,r);g.addColorStop(0,color+'bb');g.addColorStop(.45,color+'66');g.addColorStop(1,color+'00');c.fillStyle=g;c.fillRect(0,0,w,h)});
+ // Pre-baked grain; overlay blend mode at 6% opacity.
+ const grain=document.createElement('canvas');grain.width=160;grain.height=160;const gc=grain.getContext('2d');const id=gc.createImageData(160,160);let seed=5681+i*101;for(let k=0;k<id.data.length;k+=4){seed=(seed*1664525+1013904223)>>>0;const v=(seed>>>24);id.data[k]=v;id.data[k+1]=v;id.data[k+2]=v;id.data[k+3]=Math.floor(255*.06)}gc.putImageData(id,0,0);c.save();c.globalCompositeOperation='overlay';c.fillStyle=c.createPattern(grain,'repeat');c.fillRect(0,0,w,h);c.restore();}
+function imageFor(p){if(!p)return null;if(!bgImages.has(p)){const im=new Image();im.onload=()=>{cacheDirty=true;render()};im.onerror=()=>toast('Could not load image: '+path.basename(p));im.src=pathToFileURL(p).href;bgImages.set(p,im)}return bgImages.get(p)}
+function outputDimensions(){const vw=video.videoWidth||1920,vh=video.videoHeight||1080;const ratio=(vw*crop.w)/(vh*crop.h);
+ if(settings.format==='custom'){outputW=EVEN(+settings.customWidth||1920);outputH=EVEN(+settings.customHeight||1080)}
+ else{let r=settings.format==='auto'?ratio:aspect(settings.format);if(!Number.isFinite(r)||r<=0)r=16/9;if(r>=1){outputW=1920;outputH=EVEN(1920/r)}else{outputH=1920;outputW=EVEN(1920*r)}}
+ $('output-size').textContent=`Output: ${outputW} × ${outputH} px`;$('preview-dim').textContent=`${outputW} × ${outputH}`;
+ if(canvas.width!==outputW||canvas.height!==outputH){canvas.width=outputW;canvas.height=outputH;cacheDirty=true}
+ const pad=clamp(settings.padding/100,0,.30);const availableW=outputW*(1-2*pad),availableH=outputH*(1-2*pad);
+ let frameW=availableW,frameH=availableW/ratio;if(frameH>availableH){frameH=availableH;frameW=frameH*ratio}
+ frameRect={x:(outputW-frameW)/2,y:(outputH-frameH)/2,w:frameW,h:frameH};
+}
+function rounded(c,x,y,w,h,r){r=clamp(r,0,Math.min(w,h)/2);c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function coverImage(c,im,w,h){const ratio=Math.max(w/im.naturalWidth,h/im.naturalHeight),sw=w/ratio,sh=h/ratio;c.drawImage(im,(im.naturalWidth-sw)/2,(im.naturalHeight-sh)/2,sw,sh,0,0,w,h)}
+function paintBase(){if(!cacheDirty&&cache.width===outputW&&cache.height===outputH)return;
+ cache.width=outputW;cache.height=outputH;const c=cacheCtx,w=outputW,h=outputH;
+ if(settings.bgTab==='gradient'){const g=gradients[clamp(settings.bgIndex,0,47)];const a=g.angle*Math.PI/180;const dx=Math.cos(a)*w/2,dy=Math.sin(a)*h/2;const gradient=c.createLinearGradient(w/2-dx,h/2-dy,w/2+dx,h/2+dy);g.colors.forEach((color,i)=>gradient.addColorStop(i/(g.colors.length-1),color));c.fillStyle=gradient;c.fillRect(0,0,w,h)}
+ else if(settings.bgTab==='wallpaper'){wallpaperPaint(c,w,h,clamp(settings.bgIndex,0,17))}
+ else{c.fillStyle='#252035';c.fillRect(0,0,w,h);const im=imageFor(settings.imagePath);if(im&&im.complete&&im.naturalWidth){c.save();c.filter=`blur(${settings.imageBlur*Math.max(1,w/1920)}px)`;coverImage(c,im,w,h);c.restore()}}
+ const f=frameRect, strength=clamp(settings.shadow/100,0,1),r=settings.radius*Math.max(1,w/1920);
+ if(strength>0){c.save();rounded(c,f.x,f.y,f.w,f.h,r);c.fillStyle='#0b0910';c.shadowColor=`rgba(4,2,15,${.68*strength})`;c.shadowBlur=166*strength*(w/1920);c.shadowOffsetY=52*strength*(w/1920);c.fill();c.restore();
+ c.save();rounded(c,f.x,f.y,f.w,f.h,r);c.fillStyle='#08070c';c.shadowColor=`rgba(0,0,0,${.9*strength})`;c.shadowBlur=24*strength*(w/1920);c.shadowOffsetY=10*strength*(w/1920);c.fill();c.restore()}
+ cacheDirty=false;
+}
+function updateSetting(key,value){settings[key]=value;saveSettings();cacheDirty=true;cameraDirty=(key==='zoomLevel'||key==='speed'||key==='follow')||cameraDirty;renderSettings();render();}
+function renderSettings(){const fields={format:settings.format,padding:settings.padding,radius:settings.radius,shadow:settings.shadow,speed:settings.speed,'zoom-level':settings.zoomLevel,follow:settings.follow,'click-effect':settings.clickEffect,'custom-width':settings.customWidth,'custom-height':settings.customHeight,'image-blur':settings.imageBlur};
+ for(const [k,v] of Object.entries(fields)){const el=$(k);if(!el)continue;if(el.type==='checkbox')el.checked=!!v;else el.value=v}
+ $('padding-v').textContent=settings.padding+'%';$('radius-v').textContent=settings.radius+' px';$('shadow-v').textContent=settings.shadow+'%';$('zoom-level-v').textContent=(+settings.zoomLevel).toFixed(1)+'x';$('image-blur-v').textContent=settings.imageBlur+' px';
+ $('custom-dim').classList.toggle('hidden',settings.format!=='custom');$('image-blur-wrap').classList.toggle('hidden',settings.bgTab!=='image');
+ [...$('bg-tabs').children].forEach(el=>el.classList.toggle('active',el.dataset.tab===settings.bgTab));
+ outputDimensions();paintSwatches();}
+function paintSwatches(){const parent=$('background-swatches');parent.innerHTML='';const tab=settings.bgTab;
+ if(tab==='image'){
+  for(const p of settings.images||[]){const item=document.createElement('button');item.className='swatch'+(settings.imagePath===p?' active':'');item.title=path.basename(p);const im=imageFor(p);item.style.background='#282333';if(im){item.style.backgroundImage=`url("${pathToFileURL(p).href}")`;item.style.backgroundSize='cover';item.style.backgroundPosition='center'}
+   item.onclick=()=>updateSetting('imagePath',p);const del=document.createElement('button');del.className='remove';del.textContent='×';del.title='Remove image';del.onclick=e=>{e.stopPropagation();settings.images=settings.images.filter(x=>x!==p);if(settings.imagePath===p)settings.imagePath=settings.images[0]||'';saveSettings();cacheDirty=true;paintSwatches();render()};item.appendChild(del);parent.appendChild(item)}
+  const add=document.createElement('button');add.className='img-add';add.textContent='+';add.title='Add photos';add.onclick=async()=>{const files=await ipcRenderer.invoke('choose-images');settings.images=[...new Set([...(settings.images||[]),...files])];if(files.length)settings.imagePath=files[0];saveSettings();cacheDirty=true;paintSwatches();render()};parent.appendChild(add);
+ }else{
+  const count=tab==='gradient'?48:18;for(let i=0;i<count;i++){const b=document.createElement('button');b.className='swatch'+(tab==='wallpaper'?' wallpaper':'')+(i===settings.bgIndex?' active':'');b.title=tab==='wallpaper'?wallpapers[i].name:`Gradient ${i+1}`;
+   if(tab==='gradient'){const g=gradients[i];b.style.background=`linear-gradient(${g.angle}deg,${g.colors.join(',')})`}
+   else{const s=document.createElement('canvas');s.width=s.height=64;wallpaperPaint(s.getContext('2d'),64,64,i);b.style.backgroundImage=`url(${s.toDataURL()})`}
+   b.onclick=()=>updateSetting('bgIndex',i);parent.appendChild(b)}
+ }
+}
+function toast(message,action,callback){const e=$('toast');e.replaceChildren(document.createTextNode(message));if(action){const b=document.createElement('button');b.textContent=action;b.onclick=()=>{callback&&callback();e.classList.add('hidden')};e.appendChild(b)}e.classList.remove('hidden');clearTimeout(warningTimer);warningTimer=setTimeout(()=>e.classList.add('hidden'),7500)}
+async function getDisplays(){try{displays=await ipcRenderer.invoke('displays');if(!displays.length)throw new Error('No screens found');
+ if(!displays.some(d=>d.id===chosen))chosen=displays[0].id;
+ $('displays').innerHTML='';displays.forEach((d,i)=>{const card=document.createElement('button');card.className='display-card'+(d.id===chosen?' active':'');card.innerHTML=`<img class="thumb" alt="Display thumbnail" src="${d.thumbnail||''}"><div class="screen-caption"><b>${String(d.name).replaceAll('<','&lt;')}</b><span class="tiny">${d.width} × ${d.height}</span></div>`;card.onclick=()=>{chosen=d.id;area=full();getDisplays();updateAreaUI()};$('displays').appendChild(card)})}
+ catch(e){$('home-warning').textContent=`Screen discovery failed: ${e.message}`;$('home-warning').classList.remove('hidden')}}
+function updateAreaUI(){const all=area.x===0&&area.y===0&&area.w===1&&area.h===1;$('area-full').classList.toggle('active',all);$('area-select').classList.toggle('active',!all);const d=displays.find(x=>x.id===chosen);
+ $('area-caption').textContent=all?'Your full screen will be captured.':`Selected: ${Math.round((d?.width||1920)*area.w)} × ${Math.round((d?.height||1080)*area.h)} px (the full source is recorded)`}
+$('area-full').onclick=()=>{area=full();updateAreaUI()};
+$('area-select').onclick=async()=>{if(!chosen)return;const value=await ipcRenderer.invoke('select-area',chosen);if(value){area=value;updateAreaUI()}};
+for(const b of document.querySelectorAll('[data-fps]'))b.onclick=()=>{fps=+b.dataset.fps;document.querySelectorAll('[data-fps]').forEach(x=>x.classList.toggle('active',+x.dataset.fps===fps))};
+$('minimize').onclick=()=>ipcRenderer.invoke('window-control','minimize');$('maximize').onclick=()=>ipcRenderer.invoke('window-control','maximize');$('close').onclick=()=>ipcRenderer.invoke('window-control','close');
+ipcRenderer.invoke('app-info').then(info=>{if(info.hookError){$('hook-warning').textContent='Global input tracking is unavailable (uiohook-napi could not load). Recording still works, but automatic click and typing detection will not. '+info.hookError;$('hook-warning').classList.remove('hidden')}});
+ipcRenderer.on('hook-state',(_e,error)=>{if(error){$('hook-warning').textContent='Mouse tracking failed: '+error;$('hook-warning').classList.remove('hidden')}});
+getDisplays();updateAreaUI();
+async function startRecording(){
+ if(captureStream||recorder||!chosen)return;
+ const d=displays.find(d=>d.id===chosen);if(!d||!d.sourceId){toast('Choose an available display.');return}
+ $('start-record').disabled=true;$('home-warning').classList.add('hidden');let stream=null,sys=null,mic=null,mixCtx=null;
+ try{
+  const videoConstraints={mandatory:{chromeMediaSource:'desktop',chromeMediaSourceId:d.sourceId,minWidth:d.width,maxWidth:d.width,minHeight:d.height,maxHeight:d.height,maxFrameRate:fps}};
+  const deskAudio={mandatory:{chromeMediaSource:'desktop',chromeMediaSourceId:d.sourceId}};
+  // Windows generally supplies loopback audio only when requested with the desktop video.
+  if($('system-audio').checked){
+   try{stream=await navigator.mediaDevices.getUserMedia({audio:deskAudio,video:videoConstraints});if(stream.getAudioTracks().length)sys=stream}
+   catch(e){console.warn('Combined desktop audio unavailable:',e.message)}
+  }
+  if(!stream){
+   try{stream=await navigator.mediaDevices.getUserMedia({audio:false,video:videoConstraints})}
+   catch(e){stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{mandatory:{chromeMediaSource:'desktop',chromeMediaSourceId:d.sourceId,maxFrameRate:fps}}})}
+  }
+  if($('system-audio').checked&&!sys){
+   try{sys=await navigator.mediaDevices.getUserMedia({video:false,audio:deskAudio})}
+   catch(e){toast('System audio not available. Video will continue without it.')}}
+  if($('microphone').checked){
+   try{mic=await navigator.mediaDevices.getUserMedia({video:false,audio:{echoCancellation:true,noiseSuppression:true}})}
+   catch(e){toast('Microphone not available. Video recording will continue.')}}
+  const audioInputs=[...(sys?.getAudioTracks()||[]),...(mic?.getAudioTracks()||[])];
+  let tracks=[...stream.getVideoTracks()];
+  if(audioInputs.length){mixCtx=new AudioContext();await mixCtx.resume();const dest=mixCtx.createMediaStreamDestination();
+   if(sys?.getAudioTracks().length){const source=mixCtx.createMediaStreamSource(sys);source.connect(dest)}
+   if(mic?.getAudioTracks().length){const source=mixCtx.createMediaStreamSource(mic);source.connect(dest)}
+   tracks.push(...dest.stream.getAudioTracks())}
+  captureStream=stream;systemStream=sys;micStream=mic;audioCtxRecord=mixCtx;
+  const mixed=new MediaStream(tracks),mime=codec(),opts={videoBitsPerSecond:Math.round(d.width*d.height*fps*.18),audioBitsPerSecond:192000};if(mime)opts.mimeType=mime;
+  recorder=new MediaRecorder(mixed,opts);
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size)recordChunks=recordChunks.then(async()=>{
+    const buf=await e.data.arrayBuffer();ipcRenderer.send('record-chunk',new Uint8Array(buf));
+  })};
+  recorder.onerror=e=>{toast('Recording failed: '+(e.error?.message||'unknown error'));stopRecording(true)};
+  stream.getVideoTracks()[0].addEventListener('ended',()=>{if(recorder&&recorder.state!=='inactive')stopRecording(false)});
+  await ipcRenderer.invoke('record-prepare',{displayId:chosen,width:stream.getVideoTracks()[0].getSettings().width||d.width,
+   height:stream.getVideoTracks()[0].getSettings().height||d.height,fps,area,countdown:$('countdown').checked,mime:recorder.mimeType});
+  captureJob=true;
+ }catch(e){$('home-warning').textContent='Cannot capture this display: '+e.message;$('home-warning').classList.remove('hidden');
+  for(const s of [stream,sys,mic])s?.getTracks().forEach(t=>t.stop());if(mixCtx)mixCtx.close();
+  recorder=null;captureStream=null;systemStream=null;micStream=null;audioCtxRecord=null;
+ }finally{$('start-record').disabled=false}
+}
+async function releaseRecording(){for(const s of [captureStream,systemStream,micStream])try{s?.getTracks().forEach(t=>t.stop())}catch(_){};
+ if(audioCtxRecord)try{await audioCtxRecord.close()}catch(_){}
+ captureStream=systemStream=micStream=audioCtxRecord=null;recorder=null;captureJob=null;recordChunks=Promise.resolve()}
+async function stopRecording(discard=false){if(!captureJob||!recorder)return;
+ const mr=recorder;captureJob=false;
+ try{
+  if(mr.state!=='inactive')await new Promise(resolve=>{mr.addEventListener('stop',resolve,{once:true});mr.stop()});
+  await recordChunks;
+  const result=await ipcRenderer.invoke('record-finish',discard);
+  await releaseRecording();
+  if(result&&!discard){if(result.error)toast('Fast-seek remux failed, original kept: '+result.error);await openInEditor(result.path,result.log)}
+  else{getDisplays();if(discard)toast('Recording discarded')}
+ }catch(e){await releaseRecording();toast('Could not finish recording: '+e.message)}
+}
+ipcRenderer.on('record-now',async()=>{
+ if(recorder&&recorder.state==='inactive'){
+  try{recorder.start(1000);await ipcRenderer.invoke('record-active')}
+  catch(e){toast('Recording could not start: '+e.message);await stopRecording(true)}
+ }
+});
+ipcRenderer.on('record-error',(_e,msg)=>toast('Recording error: '+msg));
+ipcRenderer.on('stop-request',()=>stopRecording(false));
+ipcRenderer.on('discard-request',()=>stopRecording(true));
+ipcRenderer.on('start-request',()=>{if(!$('home').classList.contains('hidden'))startRecording()});
+$('start-record').onclick=startRecording;
+$('open-video').onclick=async()=>{const result=await ipcRenderer.invoke('open-video');if(result)openInEditor(result.path,result.log)};
+$('back-home').onclick=()=>{if(exporting){toast('Finish or cancel export first.');return}video.pause();previewEnabled=false;$('home').classList.remove('hidden');$('editor').classList.add('hidden');getDisplays()};
+async function openInEditor(filename,sessionLog){
+ video.pause();videoFile=filename;
+ log={cursor:[],clicks:[],keys:[],manual:[],...sessionLog};
+ for(const k of ['cursor','clicks','keys','manual']){if(!Array.isArray(log[k]))log[k]=[]}
+ log.cursor.sort((a,b)=>a[0]-b[0]);log.clicks.sort((a,b)=>a.t-b.t);log.manual.sort((a,b)=>a.t-b.t);
+ area=log.area||full();crop={...area};pendingCrop={...crop};cameraDirty=true;
+ $('file-name').textContent=path.basename(filename);$('home').classList.add('hidden');$('editor').classList.remove('hidden');
+ cropMode=false;selectedZoom=-1;pickMode=false;video.src=pathToFileURL(filename).href;video.load();
+ try{
+  await new Promise((resolve,reject)=>{const done=()=>{video.removeEventListener('loadedmetadata',done);video.removeEventListener('error',fail);resolve()};const fail=()=>{video.removeEventListener('loadedmetadata',done);video.removeEventListener('error',fail);reject(new Error('Unsupported or unreadable video'))};video.addEventListener('loadedmetadata',done);video.addEventListener('error',fail)})
+  if(!Number.isFinite(video.duration)||!video.duration){throw new Error('No valid video duration. Check ffmpeg conversion.')}
+  duration=video.duration;trimStart=0;trimEnd=duration;playhead=0;video.currentTime=0;
+  zooms=buildAutoZooms();previewEnabled=true;renderSettings();updateZoomSelection();updateTimeline();render();
+ }catch(e){toast('Could not load video: '+e.message);previewEnabled=false}
+}
+function croppedPoint(x,y,c=crop){return{x:clamp((x-c.x)/c.w,0,1),y:clamp((y-c.y)/c.h,0,1)}}
+function sourcePoint(x,y,c=crop){return{x:c.x+x*c.w,y:c.y+y*c.h}}
+function buildAutoZooms(){const points=[...log.clicks.map(p=>({...p,type:'click'})),...log.manual.map(p=>({...p,type:'manual'}))]
+ .filter(p=>Number.isFinite(p.t)&&Number.isFinite(p.x)&&Number.isFinite(p.y))
+ .filter(p=>p.x>=crop.x&&p.x<=crop.x+crop.w&&p.y>=crop.y&&p.y<=crop.y+crop.h)
+ .sort((a,b)=>a.t-b.t);
+ if(!points.length)return[];
+ const groups=[];let group=null;
+ for(const p of points){
+  if(group && p.t-group.lastClick<.8){group.lastClick=p.t;group.end=Math.min(duration,p.t+2.2)}
+  else{group={start:Math.max(0,p.t-.45),end:Math.min(duration,p.t+2.2),lastClick:p.t,
+   level:+settings.zoomLevel,mode:'follow',x:p.x,y:p.y};groups.push(group)}
+ }
+ for(const g of groups){for(const k of log.keys){const t=typeof k==='number'?k:k.t;if(t>=g.start&&t<=g.end)g.end=Math.min(duration,Math.max(g.end,t+1.6))}}
+ // No overlapping zooms on the editor timeline.
+ for(let i=0;i<groups.length-1;i++)groups[i].end=Math.min(groups[i].end,groups[i+1].start);
+ return groups.filter(g=>g.end-g.start>=.09).map(({lastClick,...rest})=>rest)
+}
+function zoomAt(t){let lo=0,hi=zooms.length-1;while(lo<=hi){const m=(lo+hi)>>1,z=zooms[m];if(t<z.start)hi=m-1;else if(t>z.end)lo=m+1;else return {index:m,zoom:z}}return {index:-1,zoom:null}}
+function rebuildCamera(){
+ cameraDirty=false;const rate=60,len=Math.min(500000,Math.ceil(duration*rate)+1);
+ const zx=new Float32Array(len),cx=new Float32Array(len),cy=new Float32Array(len);
+ const stiffness=settings.speed==='calm'?[4.2,3.2]:settings.speed==='fast'?[9.5,7.5]:[6.5,5];
+ const points=[...log.clicks,...log.manual].filter(p=>p.x>=crop.x&&p.x<=crop.x+crop.w&&p.y>=crop.y&&p.y<=crop.y+crop.h).sort((a,b)=>a.t-b.t);
+ const first=points.length?croppedPoint(points[0].x,points[0].y):{x:.5,y:.5};
+ let z=1,zv=0,x=first.x,y=first.y,xv=0,yv=0,idx=0,cursorIndex=0,prevIndex=-1;
+ for(let i=0;i<len;i++){
+  const t=i/rate;while(idx<zooms.length&&zooms[idx].end<t)idx++;
+  const active=(zooms[idx]&&zooms[idx].start<=t&&t<=zooms[idx].end)?zooms[idx]:null;
+  const activeIndex=active?idx:-1;
+  while(cursorIndex+1<log.cursor.length && log.cursor[cursorIndex+1][0]<=t)cursorIndex++;
+  let mouse=log.cursor[cursorIndex];let cp=mouse?croppedPoint(mouse[1],mouse[2]):active?croppedPoint(active.x,active.y):first;
+  if(mouse&&cursorIndex+1<log.cursor.length){const n=log.cursor[cursorIndex+1],fac=clamp((t-mouse[0])/(n[0]-mouse[0]||1),0,1);cp=croppedPoint(mouse[1]+(n[1]-mouse[1])*fac,mouse[2]+(n[2]-mouse[2])*fac)}
+  const targetZ=active?active.level:1;
+  let targetX=.5,targetY=.5;
+  if(active){
+   const anchor=croppedPoint(active.x,active.y);
+   if(active.mode==='fixed'){targetX=anchor.x;targetY=anchor.y}
+   else if(!settings.follow){targetX=anchor.x;targetY=anchor.y}
+   else{
+    const dead=.25/Math.max(1,z);
+    targetX=x+clamp(cp.x-x,-1,1)-clamp(cp.x-x,-dead,dead);
+    targetY=y+clamp(cp.y-y,-1,1)-clamp(cp.y-y,-dead,dead);
+   }
+  }else if(idx<zooms.length&&t<zooms[idx].start){const q=croppedPoint(zooms[idx].x,zooms[idx].y);targetX=q.x;targetY=q.y}
+  if(activeIndex!==prevIndex && active && z<1.08){x=targetX;y=targetY;xv=0;yv=0}
+  prevIndex=activeIndex;
+  for(let step=0;step<4;step++){
+   const dt=1/(rate*4),sz=stiffness[0],sp=stiffness[1];
+   zv+=(sz*sz*(targetZ-z)-2*sz*zv)*dt;z+=zv*dt;z=clamp(z,1,3.6);
+   xv+=(sp*sp*(targetX-x)-2*sp*xv)*dt;x+=xv*dt;
+   yv+=(sp*sp*(targetY-y)-2*sp*yv)*dt;y+=yv*dt;
+   const half=.5/z;const nx=clamp(x,half,1-half),ny=clamp(y,half,1-half);
+   if(nx!==x)xv=0;if(ny!==y)yv=0;x=nx;y=ny;
+  }
+  zx[i]=z;cx[i]=x;cy[i]=y;
+ }
+ camera={zx,cx,cy,rate};
+}
+function getCamera(t){if(cameraDirty||!camera.zx)rebuildCamera();const k=clamp(t*camera.rate,0,camera.zx.length-1),a=Math.floor(k),b=Math.min(a+1,camera.zx.length-1),f=k-a;
+ const lerp=ar=>ar[a]+(ar[b]-ar[a])*f;return{z:lerp(camera.zx),x:lerp(camera.cx),y:lerp(camera.cy)}}
+function paintVideo(){if(!previewEnabled||video.readyState<2)return;
+ if(cacheDirty)outputDimensions();paintBase();ctx.clearRect(0,0,outputW,outputH);ctx.drawImage(cache,0,0);
+ const f=frameRect, r=settings.radius*outputW/1920,cam=getCamera(video.currentTime);
+ ctx.save();rounded(ctx,f.x,f.y,f.w,f.h,r);ctx.clip();
+ const vw=video.videoWidth||1920,vh=video.videoHeight||1080;
+ const cw=vw*crop.w,ch=vh*crop.h,sw=cw/cam.z,sh=ch/cam.z;
+ const sx=clamp(vw*(crop.x+crop.w*cam.x)-sw/2,vw*crop.x,vw*(crop.x+crop.w)-sw);
+ const sy=clamp(vh*(crop.y+crop.h*cam.y)-sh/2,vh*crop.y,vh*(crop.y+crop.h)-sh);
+ try{ctx.drawImage(video,sx,sy,sw,sh,f.x,f.y,f.w,f.h)}catch(_){}
+ if(settings.clickEffect){for(const p of log.clicks){const dt=video.currentTime-p.t;
+   if(dt<0||dt>.55||p.x<crop.x||p.x>crop.x+crop.w||p.y<crop.y||p.y>crop.y+crop.h)continue;
+   const u=croppedPoint(p.x,p.y),relx=(u.x-cam.x)*cam.z+.5,rely=(u.y-cam.y)*cam.z+.5;
+   const px=f.x+relx*f.w,py=f.y+rely*f.h;if(px<f.x||px>f.x+f.w||py<f.y||py>f.y+f.h)continue;
+   ctx.beginPath();ctx.arc(px,py,(12+50*dt/.55)*outputW/1920,0,Math.PI*2);ctx.strokeStyle=`rgba(255,255,255,${.93*(1-dt/.55)})`;ctx.lineWidth=Math.max(2,3*outputW/1920);ctx.stroke();
+ }}ctx.restore();
+ // A tiny highlight along the frame edge gives the rounded rectangle definition.
+ ctx.save();rounded(ctx,f.x+.5,f.y+.5,f.w-1,f.h-1,r);ctx.lineWidth=Math.max(1,outputW/1600);ctx.strokeStyle='#ffffff26';ctx.stroke();ctx.restore();
+ if(pickMode){ctx.save();ctx.fillStyle='#130b20ac';ctx.fillRect(0,0,outputW,34*outputW/1280);ctx.fillStyle='white';ctx.font=`700 ${19*outputW/1280}px DM Sans, sans-serif`;ctx.fillText('Click a point inside the video to lock camera focus',20*outputW/1280,24*outputW/1280);ctx.restore()}
+}
+let cropView={x:0,y:0,w:1,h:1};
+function drawCrop(){if(video.readyState<2)return;
+ ctx.fillStyle='#09090d';ctx.fillRect(0,0,outputW,outputH);
+ const ratio=video.videoWidth/video.videoHeight;let w=outputW,h=w/ratio;if(h>outputH){h=outputH;w=h*ratio}
+ const x=(outputW-w)/2,y=(outputH-h)/2;cropView={x,y,w,h};
+ ctx.drawImage(video,x,y,w,h);
+ const c=pendingCrop;const bx=x+c.x*w,by=y+c.y*h,bw=c.w*w,bh=c.h*h;
+ ctx.fillStyle='#07060b9c';ctx.fillRect(x,y,w,Math.max(0,by-y));ctx.fillRect(x,by,Math.max(0,bx-x),bh);ctx.fillRect(bx+bw,by,Math.max(0,x+w-bx-bw),bh);ctx.fillRect(x,by+bh,w,Math.max(0,y+h-by-bh));
+ ctx.strokeStyle='#b475ff';ctx.lineWidth=Math.max(2,outputW/650);ctx.strokeRect(bx,by,bw,bh);
+ ctx.strokeStyle='#ffffff70';ctx.lineWidth=1;for(let i=1;i<=2;i++){ctx.beginPath();ctx.moveTo(bx+bw*i/3,by);ctx.lineTo(bx+bw*i/3,by+bh);ctx.moveTo(bx,by+bh*i/3);ctx.lineTo(bx+bw,by+bh*i/3);ctx.stroke()}
+ ctx.fillStyle='#e4c5ff';const s=8*outputW/1280;for(const [hx,hy] of [[bx,by],[bx+bw,by],[bx,by+bh],[bx+bw,by+bh]])ctx.fillRect(hx-s/2,hy-s/2,s,s);
+ const cw=Math.round(pendingCrop.w*video.videoWidth),ch=Math.round(pendingCrop.h*video.videoHeight);
+ $('crop-size').textContent=`${cw} × ${ch} px`;
+}
+function layoutCanvas(){const stage=$('preview-stage'),rect=stage.getBoundingClientRect();const scale=Math.max(.02,Math.min((rect.width-32)/outputW,(rect.height-24)/outputH));canvas.style.width=Math.floor(scale*outputW)+'px';canvas.style.height=Math.floor(scale*outputH)+'px'}
+function render(){if(!previewEnabled)return;if(cacheDirty)outputDimensions();layoutCanvas();if(cropMode)drawCrop();else paintVideo()}
+function tick(t){if(previewEnabled){if(!video.paused&&Number.isFinite(video.currentTime)){
+   if(video.currentTime>=trimEnd-.015){video.pause();video.currentTime=trimEnd;}
+   playhead=clamp(video.currentTime,trimStart,trimEnd);updateTimeUI();updatePlayheadPositions();}
+  render();}requestAnimationFrame(tick)}requestAnimationFrame(tick);
+function seek(t){t=clamp(t,trimStart,trimEnd);video.currentTime=t;playhead=t;updateTimeUI();updatePlayheadPositions();render()}
+video.addEventListener('seeked',()=>render());
+video.addEventListener('play',()=>{$('play').textContent='❚❚'});
+video.addEventListener('pause',()=>{$('play').textContent='▶'});
+function togglePlayback(){if(!previewEnabled||cropMode)return;if(video.paused){if(video.currentTime>=trimEnd-.03)seek(trimStart);video.play().catch(e=>toast(e.message))}else video.pause()}
+$('play').onclick=togglePlayback;
+function updateTimeUI(){const cur=clamp(playhead,0,duration);$('timecode').textContent=`${fmt(cur)} / ${fmt(duration)}`}
+function percent(t){return `${clamp(t/Math.max(.01,duration),0,1)*100}%`}
+function timelineTime(ev,lane){const box=lane.getBoundingClientRect();return clamp((ev.clientX-box.left)/box.width*duration,0,duration)}
+function updatePlayheadPositions(){for(const lane of ['ruler','clip-lane','zoom-lane']){
+  const pointer=$(lane).querySelector('.playhead');if(pointer)pointer.style.left=percent(playhead)
+}}
+function updateTimeline(){
+ updateTimeUI();$('zoom-count').textContent=`${zooms.length} zoom${zooms.length===1?'':'s'}`;
+ const ruler=$('ruler');ruler.innerHTML='';const rw=Math.max(450,ruler.getBoundingClientRect().width);
+ const interval=[1,2,5,10,15,20,30,60,120,300,600].find(x=>x/duration*rw>=68)||600;
+ for(let t=0;t<=duration+.001;t+=interval){const el=document.createElement('div');el.className='tick';el.style.left=percent(t);el.innerHTML=`<span>${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}</span>`;ruler.appendChild(el)}
+ const clip=$('clip-lane');clip.innerHTML='';const block=document.createElement('div');block.className='clip-block';block.style.left=percent(trimStart);block.style.width=percent(trimEnd-trimStart);
+ for(const side of ['left','right']){const handle=document.createElement('div');handle.className='trim '+side;handle.dataset.trim=side;block.appendChild(handle)}clip.appendChild(block);
+ for(const p of [...log.clicks.map(q=>({...q,manual:false})),...log.manual.map(q=>({...q,manual:true}))]){
+  if(p.t<0||p.t>duration)continue;const dot=document.createElement('span');dot.className='click-dot'+(p.manual?' manual':'');dot.style.left=percent(p.t);clip.appendChild(dot)}
+ const zoomLane=$('zoom-lane');zoomLane.innerHTML='';zooms.forEach((z,i)=>{const el=document.createElement('div');el.className='zoom-block'+(selectedZoom===i?' active':'');el.style.left=percent(z.start);el.style.width=percent(z.end-z.start);el.dataset.zoomIndex=i;
+  const label=document.createElement('span');label.textContent=`${(+z.level).toFixed(1)}x`;el.appendChild(label);
+  for(const side of ['left','right']){const edge=document.createElement('span');edge.className='edge '+side;edge.dataset.edge=side;el.appendChild(edge)}zoomLane.appendChild(el)});
+ for(const lane of [ruler,clip,zoomLane]){const marker=document.createElement('div');marker.className='playhead';marker.style.left=percent(playhead);lane.appendChild(marker)}
+}
+function chooseZoom(i){selectedZoom=i;pickMode=false;updateZoomSelection();updateTimeline()}
+function updateZoomSelection(){const section=$('selected-zoom'),z=zooms[selectedZoom];section.classList.toggle('hidden',!z);
+ if(z){$('selected-label').textContent=`Selected zoom · ${fmt(z.start)}–${fmt(z.end)}`;$('selected-level').value=z.level;$('selected-level-v').textContent=(+z.level).toFixed(1)+'x';$('selected-mode').value=z.mode||'follow';$('pick-point').textContent=pickMode?'Click inside the preview…':'⌖ Pick point in preview'}
+}
+function noOverlap(z,i){const a=i>0?zooms[i-1].end:0,b=i<zooms.length-1?zooms[i+1].start:duration;
+ z.start=clamp(z.start,a,b-.1);z.end=clamp(z.end,z.start+.1,b);}
+function insertZoom(){if(!duration)return;const t=clamp(playhead,0,duration-.12);
+ if(zoomAt(t).zoom){toast('A zoom already exists at the playhead.');return}
+ const i=zooms.findIndex(x=>x.start>t),index=i<0?zooms.length:i;
+ const previous=index>0?zooms[index-1].end:0,next=index<zooms.length?zooms[index].start:duration;
+ const start=Math.max(t,previous),end=Math.min(next,start+2.4);
+ if(end-start<.15){toast('There is not enough empty space for a zoom here.');return}
+ const p=getCursorAt(t),point=p||sourcePoint(.5,.5);
+ zooms.splice(index,0,{start,end,level:+settings.zoomLevel,mode:'follow',x:point.x,y:point.y});cameraDirty=true;chooseZoom(index);render()}
+function getCursorAt(t){if(!log.cursor.length)return null;let lo=0,hi=log.cursor.length-1;
+ while(lo<hi){const m=Math.floor((lo+hi)/2);if(log.cursor[m][0]<t)lo=m+1;else hi=m}
+ const p=log.cursor[lo];return{x:p[1],y:p[2]}}
+$('add-zoom').onclick=insertZoom;
+$('rebuild').onclick=()=>{zooms=buildAutoZooms();selectedZoom=-1;cameraDirty=true;updateZoomSelection();updateTimeline();render();toast(`Built ${zooms.length} zooms from clicks and manual markers.`)};
+$('clear-zooms').onclick=()=>{zooms=[];selectedZoom=-1;cameraDirty=true;updateZoomSelection();updateTimeline();render()};
+$('delete-zoom').onclick=()=>{if(!zooms[selectedZoom])return;zooms.splice(selectedZoom,1);selectedZoom=-1;cameraDirty=true;updateZoomSelection();updateTimeline();render()};
+$('selected-level').oninput=e=>{const z=zooms[selectedZoom];if(!z)return;z.level=+e.target.value;cameraDirty=true;$('selected-level-v').textContent=z.level.toFixed(1)+'x';updateTimeline();render()};
+$('selected-mode').onchange=e=>{const z=zooms[selectedZoom];if(z){z.mode=e.target.value;cameraDirty=true;if(z.mode==='fixed')pickMode=true;updateZoomSelection();render()}};
+$('pick-point').onclick=()=>{if(!zooms[selectedZoom])return;pickMode=true;zooms[selectedZoom].mode='fixed';cameraDirty=true;updateZoomSelection();render()};
+for(const key of ['padding','radius','shadow','zoom-level','image-blur']){$(key).oninput=e=>updateSetting(key==='zoom-level'?'zoomLevel':key==='image-blur'?'imageBlur':key,+e.target.value)}
+for(const key of ['format','speed'])$(key).onchange=e=>updateSetting(key,e.target.value);
+for(const key of ['follow','click-effect'])$(key).onchange=e=>updateSetting(key==='click-effect'?'clickEffect':key,e.target.checked);
+for(const key of ['custom-width','custom-height'])$(key).onchange=e=>{const value=EVEN(+e.target.value||320);e.target.value=value;updateSetting(key==='custom-width'?'customWidth':'customHeight',value)};
+for(const b of $('bg-tabs').children)b.onclick=()=>{settings.bgTab=b.dataset.tab;settings.bgIndex=0;if(settings.bgTab==='image'&&!settings.imagePath)settings.imagePath=settings.images?.[0]||'';saveSettings();cacheDirty=true;renderSettings();render()};
+function pointerStartTimeline(e,lane){if(!previewEnabled||exporting)return;
+ e.preventDefault();let mode='seek',index=-1,from=0,original=null;
+ const trim=e.target.closest('.trim');const block=e.target.closest('.zoom-block');
+ if(trim){mode=trim.dataset.trim==='left'?'trim-left':'trim-right';from=timelineTime(e,lane);original={start:trimStart,end:trimEnd}}
+ else if(block){index=+block.dataset.zoomIndex;chooseZoom(index);const edge=e.target.closest('.edge');mode=edge?`zoom-${edge.dataset.edge}`:'zoom-move';from=timelineTime(e,lane);original={...zooms[index]};}
+ else{seek(timelineTime(e,lane));}
+ dragState={mode,index,from,original,lane};lane.setPointerCapture(e.pointerId);
+}
+function pointerMoveTimeline(e){if(!dragState)return;const {mode,index,from,original,lane}=dragState;
+ if(mode==='seek'){seek(timelineTime(e,lane));return}
+ const delta=timelineTime(e,lane)-from;
+ if(mode.startsWith('trim-')){
+  if(mode==='trim-left')trimStart=clamp(original.start+delta,0,trimEnd-.12);
+  else trimEnd=clamp(original.end+delta,trimStart+.12,duration);
+  if(playhead<trimStart||playhead>trimEnd)seek(clamp(playhead,trimStart,trimEnd));
+ }else if(mode.startsWith('zoom-')&&zooms[index]){
+  const z=zooms[index],left=index>0?zooms[index-1].end:0,right=index<zooms.length-1?zooms[index+1].start:duration;
+  if(mode==='zoom-move'){const length=original.end-original.start;z.start=clamp(original.start+delta,left,right-length);z.end=z.start+length}
+  else if(mode==='zoom-left')z.start=clamp(original.start+delta,left,z.end-.15);
+  else z.end=clamp(original.end+delta,z.start+.15,right);
+  cameraDirty=true;updateZoomSelection();
+ }
+ updateTimeline();render();
+}
+function pointerEndTimeline(e){if(dragState){try{dragState.lane.releasePointerCapture(e.pointerId)}catch(_){}dragState=null;updateTimeline()}}
+for(const lane of ['ruler','clip-lane','zoom-lane']){
+ $(lane).addEventListener('pointerdown',e=>pointerStartTimeline(e,$(lane)));
+ $(lane).addEventListener('pointermove',pointerMoveTimeline);
+ $(lane).addEventListener('pointerup',pointerEndTimeline);
+ $(lane).addEventListener('pointercancel',pointerEndTimeline);
+}
+function changeCropMode(enabled){video.pause();cropMode=enabled;pickMode=false;
+ $('crop-panel').classList.toggle('hidden',!enabled);$('normal-panel').classList.toggle('hidden',enabled);
+ $('crop-open').classList.toggle('hidden',enabled);$('canvas-title').textContent=enabled?'CROP YOUR RECORDING':'LIVE PREVIEW';$('crop-hint').classList.toggle('hidden',!enabled);
+ if(enabled){pendingCrop={...crop};$('crop-aspect').value='free'}render()}
+$('crop-open').onclick=()=>changeCropMode(true);
+$('crop-cancel').onclick=()=>changeCropMode(false);
+$('crop-full').onclick=()=>{pendingCrop=full();render()};
+$('crop-apply').onclick=()=>{crop={...pendingCrop};cameraDirty=true;cacheDirty=true;changeCropMode(false);renderSettings();render();};
+function canvasCoords(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*outputW,y:(e.clientY-r.top)/r.height*outputH}}
+function cropCoordinates(e){const p=canvasCoords(e),v=cropView;return{x:clamp((p.x-v.x)/v.w,0,1),y:clamp((p.y-v.y)/v.h,0,1)}}
+function boundCrop(r){let x=clamp(r.x,0,1),y=clamp(r.y,0,1),w=clamp(r.w,.01,1-x),h=clamp(r.h,.01,1-y);return{x,y,w,h}}
+function rectangleFromPoints(a,b,lock){let dx=b.x-a.x,dy=b.y-a.y;
+ if(lock){const vw=video.videoWidth||1920,vh=video.videoHeight||1080;const ww=Math.abs(dx)*vw,hh=Math.abs(dy)*vh;const want=Math.max(ww,hh*lock);dx=(dx<0?-1:1)*want/vw;dy=(dy<0?-1:1)*want/lock/vh}
+ let x=Math.min(a.x,a.x+dx),y=Math.min(a.y,a.y+dy),w=Math.abs(dx),h=Math.abs(dy);
+ if(x<0){w+=x;x=0}if(y<0){h+=y;y=0}return boundCrop({x,y,w:Math.min(w,1-x),h:Math.min(h,1-y)})}
+canvas.addEventListener('pointerdown',e=>{
+ if(!previewEnabled||exporting)return;
+ if(pickMode&&!cropMode&&zooms[selectedZoom]){
+  const p=canvasCoords(e),f=frameRect;if(p.x<f.x||p.x>f.x+f.w||p.y<f.y||p.y>f.y+f.h)return;
+  const cam=getCamera(video.currentTime);const nx=clamp(cam.x+((p.x-f.x)/f.w-.5)/cam.z,0,1),ny=clamp(cam.y+((p.y-f.y)/f.h-.5)/cam.z,0,1);
+  const src=sourcePoint(nx,ny);const z=zooms[selectedZoom];z.x=src.x;z.y=src.y;z.mode='fixed';pickMode=false;cameraDirty=true;updateZoomSelection();render();return;
+ }
+ if(!cropMode)return;
+ const p=cropCoordinates(e),r=pendingCrop,pt=canvasCoords(e),threshold=13*outputW/1280;
+ const corners=[['nw',r.x,r.y],['ne',r.x+r.w,r.y],['sw',r.x,r.y+r.h],['se',r.x+r.w,r.y+r.h]];
+ let mode='new',corner='';for(const [name,x,y] of corners){const dx=(x-p.x)*cropView.w,dy=(y-p.y)*cropView.h;if(Math.hypot(dx,dy)<threshold){mode='resize';corner=name;break}}
+ if(mode==='new'&&p.x>=r.x&&p.x<=r.x+r.w&&p.y>=r.y&&p.y<=r.y+r.h)mode='move';
+ cropDrag={mode,corner,start:p,original:{...r}};canvas.setPointerCapture(e.pointerId);e.preventDefault()
+});
+canvas.addEventListener('pointermove',e=>{
+ if(!cropMode||!cropDrag)return;const p=cropCoordinates(e),d=cropDrag,lock=aspect($('crop-aspect').value);
+ if(d.mode==='move'){const dx=p.x-d.start.x,dy=p.y-d.start.y;pendingCrop={...d.original,x:clamp(d.original.x+dx,0,1-d.original.w),y:clamp(d.original.y+dy,0,1-d.original.h)}}
+ else if(d.mode==='new')pendingCrop=rectangleFromPoints(d.start,p,lock);
+ else{const r=d.original,opposite={nw:{x:r.x+r.w,y:r.y+r.h},ne:{x:r.x,y:r.y+r.h},sw:{x:r.x+r.w,y:r.y},se:{x:r.x,y:r.y}}[d.corner];
+  pendingCrop=rectangleFromPoints(opposite,p,lock)}
+ render()
+});
+canvas.addEventListener('pointerup',e=>{if(cropDrag){cropDrag=null;try{canvas.releasePointerCapture(e.pointerId)}catch(_){}}});
+canvas.addEventListener('pointercancel',()=>{cropDrag=null});
+$('crop-aspect').onchange=()=>{const lock=aspect($('crop-aspect').value);if(!lock)return;const r=pendingCrop,vw=video.videoWidth,vh=video.videoHeight;
+ let w=r.w,h=(w*vw)/(lock*vh);if(h>1-r.y){h=1-r.y;w=h*lock*vh/vw}pendingCrop=boundCrop({...r,w,h});render()};
+document.addEventListener('keydown',e=>{
+ if($('editor').classList.contains('hidden')||e.ctrlKey||e.metaKey||e.altKey)return;
+ if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;
+ if(e.key==='Escape'){e.preventDefault();if(cropMode)changeCropMode(false);else if(pickMode){pickMode=false;updateZoomSelection();render()}else chooseZoom(-1)}
+ else if(e.key==='Enter'&&cropMode){e.preventDefault();$('crop-apply').click()}
+ else if(e.code==='Space'){e.preventDefault();togglePlayback()}
+ else if((e.key==='Delete'||e.key==='Backspace')&&selectedZoom>=0){e.preventDefault();$('delete-zoom').click()}
+ else if(e.key.toLowerCase()==='z'&&!cropMode){e.preventDefault();insertZoom()}
+ else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();video.pause();seek(playhead+(e.key==='ArrowLeft'?-1:1)*(e.shiftKey?1:1/(log.fps||60)))}
+});
+window.addEventListener('resize',()=>{updateTimeline();render()});
+function setExportProgress(value){value=clamp(value,0,100);$('export-fill').style.width=value.toFixed(1)+'%';$('export-label').textContent=(value<80?'Rendering ':'Converting ')+Math.floor(value)+'%'}
+ipcRenderer.on('export-progress',(_e,value)=>setExportProgress(value));
+ipcRenderer.on('export-error',(_e,message)=>toast('Export write failed: '+message));
+async function waitForSeek(t){if(Math.abs(video.currentTime-t)<.002&&video.readyState>=2)return;
+ await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{cleanup();reject(new Error('Seek timed out'))},15000);
+  const done=()=>{cleanup();resolve()};const cleanup=()=>{clearTimeout(timer);video.removeEventListener('seeked',done);video.removeEventListener('error',fail)};
+  const fail=()=>{cleanup();reject(new Error('Video seek failed'))};video.addEventListener('seeked',done);video.addEventListener('error',fail);video.currentTime=t})}
+async function setupExportAudio(){
+ if(!audioCtxExport){audioCtxExport=new AudioContext();sourceAudio=audioCtxExport.createMediaElementSource(video);sourceAudio.connect(audioCtxExport.destination)}
+ await audioCtxExport.resume();sourceAudio.disconnect();audioDestination=audioCtxExport.createMediaStreamDestination();sourceAudio.connect(audioDestination);
+ return audioDestination.stream.getAudioTracks();
+}
+function restoreExportAudio(){if(sourceAudio){try{sourceAudio.disconnect();sourceAudio.connect(audioCtxExport.destination)}catch(_){}}audioDestination=null}
+async function exportVideo(){
+ if(!previewEnabled||exporting)return;if(cropMode)changeCropMode(false);
+ video.pause();const dest=await ipcRenderer.invoke('export-dialog');if(!dest)return;
+ exporting=true;renderingExport=true;exportCancelled=false;const button=$('export-btn');button.disabled=true;$('export-ui').classList.remove('hidden');setExportProgress(0);
+ let chunks=Promise.resolve(),captured=null;
+ try{
+  await waitForSeek(trimStart);playhead=trimStart;render();
+  // Do not record a canvas-generated input: this is only used for the final edited export.
+  captured=canvas.captureStream(60);
+  const audioTracks=await setupExportAudio();const output=new MediaStream([...captured.getVideoTracks(),...audioTracks]);
+  const mime=codec(),options={videoBitsPerSecond:Math.round(outputW*outputH*60*.25),audioBitsPerSecond:192000};if(mime)options.mimeType=mime;
+  exportRecorder=new MediaRecorder(output,options);
+  exportId=await ipcRenderer.invoke('export-begin',dest,trimEnd-trimStart);
+  const currentId=exportId;
+  exportRecorder.ondataavailable=e=>{if(e.data?.size)chunks=chunks.then(async()=>{
+   const array=await e.data.arrayBuffer();ipcRenderer.send('export-chunk',currentId,new Uint8Array(array))})};
+  const recordingStopped=new Promise((resolve,reject)=>{
+   exportRecorder.addEventListener('stop',resolve,{once:true});exportRecorder.addEventListener('error',e=>reject(e.error||new Error('MediaRecorder error')),{once:true})});
+  exportRecorder.start(500);
+  try{await video.play()}catch(e){throw new Error('Unable to play the video during export: '+e.message)}
+  await new Promise((resolve,reject)=>{
+   let start=performance.now();
+   const advance=()=>{
+    if(exportCancelled){resolve();return}
+    const t=video.currentTime;
+    if(t>=trimEnd-.017){video.pause();seek(trimEnd);setExportProgress(80);resolve();return}
+    if(video.paused&&performance.now()-start>2000){reject(new Error('Playback stopped unexpectedly'));return}
+    if(performance.now()-start>(trimEnd-trimStart+25)*1000){reject(new Error('Export playback timed out'));return}
+    setExportProgress(80*clamp((t-trimStart)/(trimEnd-trimStart),0,1));render();requestAnimationFrame(advance)
+   };requestAnimationFrame(advance)
+  });
+  if(exportRecorder.state!=='inactive')exportRecorder.stop();
+  await recordingStopped;await chunks;
+  if(exportCancelled){if(exportId)await ipcRenderer.invoke('export-cancel',exportId);return}
+  restoreExportAudio();
+  setExportProgress(80);
+  const result=await ipcRenderer.invoke('export-finish',exportId);
+  if(!result?.cancelled){setExportProgress(100);toast(result.fallback?'MP4 conversion failed. WebM was saved instead.':'MP4 exported successfully.','Show in folder',()=>ipcRenderer.invoke('show-in-folder',result.path));
+   if(result.warning)console.warn('ffmpeg:',result.warning)}
+ }catch(e){toast('Export failed: '+e.message);if(exportRecorder?.state==='recording')try{exportRecorder.stop()}catch(_){};
+  if(exportId)try{await ipcRenderer.invoke('export-cancel',exportId)}catch(_){}
+ }finally{video.pause();restoreExportAudio();if(captured)captured.getTracks().forEach(t=>t.stop());
+  exportRecorder=null;exportId=null;exporting=false;renderingExport=false;button.disabled=false;$('export-ui').classList.add('hidden');
+  try{seek(trimStart)}catch(_){};
+ }
+}
+$('export-btn').onclick=exportVideo;
+$('cancel-export').onclick=async()=>{if(!exporting)return;exportCancelled=true;video.pause();if(exportRecorder?.state==='recording')try{exportRecorder.stop()}catch(_){};
+ if(exportId)try{await ipcRenderer.invoke('export-cancel',exportId)}catch(_){};toast('Export cancelled')};
+renderSettings();
+</script></body></html>
